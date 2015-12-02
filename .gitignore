@@ -3,3 +3,6 @@ bin
 *.user
 *.suo
 /packages
+/QuickDevelop.Web/*.user
+/QuickDevelop.Web/Web.Release.config
+/QuickDevelop.Web/Web.Debug.config
