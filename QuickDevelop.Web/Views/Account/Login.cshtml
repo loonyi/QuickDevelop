@@ -76,10 +76,10 @@
 
                         foreach (var provider in loginProviders)
                         {
-                            <a class="btn btn-default btn-sm social-login-link" title="@provider.AuthenticationType"
+                            <a class="btn btn-default btn-sm social-login-link" title="@provider.Caption"
                                data-provider="@provider.AuthenticationType"
                                href="javascript:;">
-                                <i class="fa fa-@(provider.AuthenticationType.ToLower())"></i> @provider.AuthenticationType
+                                <i class="fa fa-@(provider.AuthenticationType.ToLower())"></i> @provider.Caption
                             </a>
                         }
                     }

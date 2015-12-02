@@ -5,9 +5,9 @@ using QuickDevelop.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Google;
-using Microsoft.Owin.Security.Twitter;
+using Microsoft.Owin.Security.Sina;
+using Microsoft.Owin.Security.Tencent;
 using Owin;
 
 [assembly: OwinStartup(typeof(Startup))]
@@ -28,53 +28,48 @@ namespace QuickDevelop.Web
 
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
-            if (IsTrue("ExternalAuth.Facebook.IsEnabled"))
+            //if (IsTrue("ExternalAuth.Google.IsEnabled"))
+            //{
+            //    app.UseGoogleAuthentication(CreateGoogleAuthOptions());
+            //}
+            if (IsTrue("ExternalAuth.Sina.IsEnabled"))
             {
-                app.UseFacebookAuthentication(CreateFacebookAuthOptions());
+                app.UseSinaAuthentication(CreateSinaAuthOptions());
             }
-
-            if (IsTrue("ExternalAuth.Twitter.IsEnabled"))
+            if (IsTrue("ExternalAuth.Tencent.IsEnabled"))
             {
-                app.UseTwitterAuthentication(CreateTwitterAuthOptions());
-            }
-
-            if (IsTrue("ExternalAuth.Google.IsEnabled"))
-            {
-                app.UseGoogleAuthentication(CreateGoogleAuthOptions());
+                app.UseTencentAuthentication(CreateTencentAuthOptions());
             }
         }
 
-        private static FacebookAuthenticationOptions CreateFacebookAuthOptions()
+        private TencentAuthenticationOptions CreateTencentAuthOptions()
         {
-            var options = new FacebookAuthenticationOptions
+            return new TencentAuthenticationOptions
             {
-                AppId = ConfigurationManager.AppSettings["ExternalAuth.Facebook.AppId"],
-                AppSecret = ConfigurationManager.AppSettings["ExternalAuth.Facebook.AppSecret"]
-            };
-
-            options.Scope.Add("email");
-            options.Scope.Add("public_profile");
-
-            return options;
-        }
-
-        private static TwitterAuthenticationOptions CreateTwitterAuthOptions()
-        {
-            return new TwitterAuthenticationOptions
-            {
-                ConsumerKey = ConfigurationManager.AppSettings["ExternalAuth.Twitter.ConsumerKey"],
-                ConsumerSecret = ConfigurationManager.AppSettings["ExternalAuth.Twitter.ConsumerSecret"]
+                AppId = ConfigurationManager.AppSettings["ExternalAuth.Tencent.AppId"],
+                AppSecret = ConfigurationManager.AppSettings["ExternalAuth.Tencent.AppSecret"],
+                Caption="腾讯QQ"
             };
         }
 
-        private static GoogleOAuth2AuthenticationOptions CreateGoogleAuthOptions()
+        private SinaAuthenticationOptions CreateSinaAuthOptions()
         {
-            return new GoogleOAuth2AuthenticationOptions
+            return new SinaAuthenticationOptions
             {
-                ClientId = ConfigurationManager.AppSettings["ExternalAuth.Google.ClientId"],
-                ClientSecret = ConfigurationManager.AppSettings["ExternalAuth.Google.ClientSecret"]
+                AppId = ConfigurationManager.AppSettings["ExternalAuth.Sina.AppId"],
+                AppSecret = ConfigurationManager.AppSettings["ExternalAuth.Sina.AppSecret"],
+                Caption="新浪微博"
             };
         }
+
+        //private static GoogleOAuth2AuthenticationOptions CreateGoogleAuthOptions()
+        //{
+        //    return new GoogleOAuth2AuthenticationOptions
+        //    {
+        //        ClientId = ConfigurationManager.AppSettings["ExternalAuth.Google.ClientId"],
+        //        ClientSecret = ConfigurationManager.AppSettings["ExternalAuth.Google.ClientSecret"]
+        //    };
+        //}
 
         private static bool IsTrue(string appSettingName)
         {
