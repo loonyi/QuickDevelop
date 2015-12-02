@@ -6,3 +6,4 @@ bin
 /QuickDevelop.Web/*.user
 /QuickDevelop.Web/Web.Release.config
 /QuickDevelop.Web/Web.Debug.config
+/QuickDevelop.Web/Logs
